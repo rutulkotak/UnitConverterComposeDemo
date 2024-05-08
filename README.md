@@ -30,4 +30,8 @@ Compose
 * State hoisting
   * Composable with internal state are less resuable and very difficult to test
   * Best practice is to moving the state up to the caller and make composable stateless
+  * Attached StateHoisting.jpg at the end
+* Unidirectional DataFlow
+  * State hoisting is the main pattern we use to build Unidirectional DataFlow in Jetpack Compose
+  * Unidirectional DataFlow = When state goes down ( CallerFunction() -> MyButton() ) and event goes up ( MyButton() -> CallerFunction() )
 
