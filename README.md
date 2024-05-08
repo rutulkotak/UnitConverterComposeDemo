@@ -3,10 +3,12 @@ Basic Code demo to cover:
 * Compose State
 * Recomposition
 * State Hoisting
+* ViewModel as a state holder
 * Unidirectional DataFlow
 * DI using Hilt
 * Coroutines
 * Flow
+* Room
 
 
 Compose
@@ -31,7 +33,25 @@ Compose
   * Composable with internal state are less resuable and very difficult to test
   * Best practice is to moving the state up to the caller and make composable stateless
   * Attached StateHoisting.jpg at the end
+* ViewModel as a state holder
+  * If we keep the state inside the compose functions, then state will be reset when activity gets restart like config change
+  * Best practice is to use ViewModel as a state holder
 * Unidirectional DataFlow
   * State hoisting is the main pattern we use to build Unidirectional DataFlow in Jetpack Compose
   * Unidirectional DataFlow = When state goes down ( CallerFunction() -> MyButton() ) and event goes up ( MyButton() -> CallerFunction() )
-
+ * Coroutines
+   * We should always implement long running tasks asynchronously in a seperate thread
+   * For this, latest and efficient way is Kotlin Coroutines
+   * With Kotlin 1.3, we have stable Coroutine API
+   * All the painful multithreading tasks done with RxJava, AsyncTask, Executors, HandlerThread, IntentService - Can be easily done with Coroutines
+   * CoroutineScope(Dispatchers.IO).launch { downloadUserData() // This funcation will execute inside Coroutine }
+ * Flow
+   * Reactive Programming : Instead of asking all the time to the data source, in reactive programming, publisher will send event (or data) to all their subscribers
+   * Flow is a coroutine that can emit multiple values sequentially
+   * To observe, we have to use .collect() to get the flow updates
+   * with compose, we have to get the flow as a state, hence have to use .collectAsState()
+   * Cold flow : Flow dose not start producing the data unitl it's consumer start to collect then, hence cold flow
+  
+   Images:
+   State Hoisting
+   ![StateHoisting](https://github.com/rutulkotak/UnitConverterComposeDemo/assets/3943212/6a2f83ea-92a5-4fbd-b983-e84404e86c3f)
